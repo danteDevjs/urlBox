@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const pages_controller_1 = require("../controllers/pages.controller");
+const route = (0, express_1.Router)();
+const pages_validator_1 = require("../middlewares/validators/pages.validator");
+const pages_midd_1 = require("../middlewares/pages.midd");
+const authorization_mid_1 = require("../middlewares/authorization.mid");
+route.get("/list", authorization_mid_1.authorization, pages_controller_1.Pages.list);
+route.post("/save/:idPage", authorization_mid_1.authorization, pages_validator_1.validatePages, pages_midd_1.validatePage, pages_controller_1.Pages.save);
+route.get("/delete/:idPage", authorization_mid_1.authorization, pages_controller_1.Pages.deletePage);
+exports.default = route;

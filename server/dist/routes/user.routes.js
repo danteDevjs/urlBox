@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const user_controller_1 = require("../controllers/user.controller");
+const route = (0, express_1.Router)({ caseSensitive: true });
+const user_validation_1 = require("../middlewares/validators/user.validation");
+const user_mid_1 = require("../middlewares/user.mid");
+const authorization_mid_1 = require("../middlewares/authorization.mid");
+route.get("/list", user_controller_1.UserController.listUser);
+route.get("/list/:token", authorization_mid_1.authorization, user_controller_1.UserController.listUserOne);
+route.post("/save", user_validation_1.userValidations, user_mid_1.validateUser, user_controller_1.UserController.createUser);
+route.put("/update/:idUser", user_validation_1.userValidations, user_mid_1.validateUser, user_controller_1.UserController.updateUser);
+route.delete("/delete/:idUser", user_controller_1.UserController.deleteUser);
+route.delete("/deleteL/:idUser", user_controller_1.UserController.deleteLogicUser);
+exports.default = route;
